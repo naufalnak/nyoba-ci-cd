@@ -1,0 +1,38 @@
+# .github/workflows/ci.yml
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Prisma
+        run: npx prisma generate
+
+      - name: Run tests
+        run: npm test
+
+      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploying to production..."
+          # Tambahkan perintah deploy ke server produksi atau hosting provider di sini
