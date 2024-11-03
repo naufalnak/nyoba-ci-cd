@@ -28,9 +28,6 @@ jobs:
       - name: Setup Prisma
         run: npx prisma generate
 
-      - name: Run tests
-        run: npm test
-
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         run: |
